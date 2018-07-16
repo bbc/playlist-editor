@@ -1,0 +1,7 @@
+.highlight{
+    background: #C0C0C0; /* silver */
+}
+
+.fill-space {
+    flex: 1 1 auto;
+}

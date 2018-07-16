@@ -1,0 +1,68 @@
+<div class="mat-elevation-z8">
+    <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="select">
+            <mat-header-cell matTooltip="click to select all or no slots" *matHeaderCellDef>
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()">
+              </mat-checkbox>
+            </mat-header-cell>
+            <mat-cell matTooltip="click to include/exclude this slot for replicating" *matCellDef="let row">
+              <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null"
+                            [checked]="selection.isSelected(row)">
+              </mat-checkbox>
+            </mat-cell>
+          </ng-container>
+        <ng-container matColumnDef="start">
+        <mat-header-cell *matHeaderCellDef> Start </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.start | amFromUtc | amLocal | amDateFormat: 'HH:mm'}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="duration">
+        <mat-header-cell *matHeaderCellDef> Duration </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.duration | amDuration:'minutes'}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="pid">
+        <mat-header-cell *matHeaderCellDef> Pid </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.pid}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{this.getTitle(element.pid)}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div *ngIf="element.pid === 'gap'">
+              <button 
+                matTooltip="use the checkbox on the left to choose slots and click here to add them"
+                mat-raised-button value="{{element.start}}"
+                (click)="onAdd($event)">Add selected</button>
+              <button 
+              matTooltip="click to select this gap as the place where programmes and clips from the drawer are added"
+              mat-raised-button value="{{element.start}}"
+                (click)="onMoveCursor($event)">Insert Here</button>
+          </div>
+          <div *ngIf="(element.pid !== 'gap')">
+              <button 
+              matTooltip="click here to remove this item and close up the gap"
+              mat-raised-button value="{{element.start}}" (click)="onDelete($event)">Delete</button>
+              <button 
+              matTooltip="click here to remove all occurences of this item and close up the gaps"
+              mat-raised-button value="{{element.start}}" (click)="onDeleteAll($event)">Delete All</button>
+          </div>
+      </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"
+        [ngClass]="{'highlight': cursor === row.start}"
+      >
+      </mat-row>
+    </mat-table>
+</div>
+<mat-toolbar color="primary">
+  <span class="fill-space"></span>
+  <span>
+    <button matTooltip="save the schedule" mat-raised-button (click)="onSave()">Save</button>
+  </span>
+</mat-toolbar>

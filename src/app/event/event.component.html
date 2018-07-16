@@ -1,0 +1,20 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+     <div class="modal-header">
+       <button type="button" class="close" (click)="close()" >&times;</button>
+       <h4 class="modal-title">Create Event</h4>
+     </div>
+     <div class="modal-body">
+        <label for="name">Name:</label>
+        <input name="name" [(ngModel)]="text" />
+        <br/><label for="start">Start:</label>
+        <ngb-timepicker name="start" [(ngModel)]="start"></ngb-timepicker>
+        <br/><label for="end">End:</label>
+        <ngb-timepicker name="end" [(ngModel)]="end"></ngb-timepicker>
+      </div>
+     <div class="modal-footer">
+       <button type="button" class="btn btn-primary" (click)="confirm()">OK</button>
+       <button type="button" class="btn btn-default" (click)="close()" >Cancel</button>
+     </div>
+   </div>
+</div>
