@@ -1,0 +1,36 @@
+---
+swagger: "2.0"
+info:
+  version: "2018-04-17T22:01:56Z"
+  title: "Marathi-test"
+host: "w32sum6i0d.execute-api.eu-west-1.amazonaws.com"
+basePath: "/test"
+schemes:
+- "https"
+paths:
+  /nitro-query-for-marathi:
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+    x-amazon-apigateway-any-method:
+      responses:
+        200:
+          description: "200 response"
+definitions:
+  Empty:
+    type: "object"
+    title: "Empty Schema"
